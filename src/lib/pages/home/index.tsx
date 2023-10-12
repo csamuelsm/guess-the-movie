@@ -15,7 +15,7 @@ const Home = () => {
       mb={8}
       w="full"
     >
-      <AutocompleteInput word='Star Wars: Episode IV - A New Hope (1977)' />
+      <AutocompleteInput word='Legally Blonde (2001)' />
     </Flex>
   );
 };

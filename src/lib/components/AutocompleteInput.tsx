@@ -6,6 +6,7 @@ import { buildSearch } from 'search.ts';
 import { SearchResult } from 'search.ts';
 
 import binarySearch from '../utils/binarySearch';
+import { getVectorsFromData } from '../utils';
 
 var similarity = require( 'compute-cosine-similarity' );
 
@@ -17,13 +18,17 @@ function getColorScheme(sim:number) {
     if (sim == 100) {
         //TODO: end the game and show CONGRATS!
         return 'blue'
-    }else if (sim >= 70) {
+    }else if (sim >= 50) {
         return 'green';
-    } else if (sim < 70 && sim > 30) {
+    } else if (sim < 50 && sim >= 25) {
         return 'yellow';
-    } else if (sim <= 30) {
+    } else if (sim < 25) {
         return 'pink';
     }
+}
+
+function transformValue(sim:number, biggest_sim:number) {
+    return 99*sim/biggest_sim;
 }
 
 function AutocompleteInput( props:AutocompleteProps ) {
@@ -43,6 +48,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
     word:string,
     similarity:number
   }[]>([]);
+  const [mostSimilar, setMostSimilar] = useState<number>(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -110,9 +116,9 @@ function AutocompleteInput( props:AutocompleteProps ) {
         //console.log(searchData);
         setSearchData(searchData);
         //setStatus('vectors');
-        /*
+
         // code to get the fetch the word2vec data
-        const vectors = await fetch('/api/vectors');
+        /*const vectors = await fetch('/api/vectors');
         const vector_data = await vectors.json();
         //console.log(vector_data);
         const w2v = await getVectorsFromData(vector_data.vectors, 100);
@@ -128,8 +134,9 @@ function AutocompleteInput( props:AutocompleteProps ) {
         downloadLink.innerHTML = "Download JSON";
         downloadLink.setAttribute("href", dataStr);
         downloadLink.setAttribute("download", "sortedW2V.json");
-        downloadLink.click();
-        */
+        downloadLink.click();*/
+        // end of code to fetch the word2vec data
+
         setStatus('vectors');
         let vectorData = await fetch('/api/sortedVectors');
         let vectors = await vectorData.json();
@@ -140,6 +147,21 @@ function AutocompleteInput( props:AutocompleteProps ) {
             //@ts-ignore
             setCurrWordData(currWord);
         }
+
+        // finding the closest movie to the current
+
+        let biggest_sim = -999;
+        for (let i = 0; i < vectors.vectors.length; i++) {
+            //@ts-ignore
+            //console.log(vectors.vectors[i].vector, currWord.vector)
+            //@ts-ignore
+            let sim = similarity(vectors.vectors[i].vector, currWord.vector);
+            //@ts-ignore
+            if (sim > biggest_sim && sim != 1)
+                biggest_sim = sim
+        }
+        //console.log('biggest_sim', biggest_sim)
+        setMostSimilar(biggest_sim*100);
         setStatus(null);
     }
 
@@ -229,8 +251,8 @@ function AutocompleteInput( props:AutocompleteProps ) {
         <Stack spacing={2} marginY={5} w="100%">
             {similarities.map((el) => {
                 return (
-                    <Progress value={el.similarity}
-                        colorScheme={getColorScheme(el.similarity)}
+                    <Progress value={transformValue(el.similarity, mostSimilar)}
+                        colorScheme={getColorScheme(transformValue(el.similarity, mostSimilar))}
                         height={30}
                         borderRadius={5}
                         border={el.word === guess ? "2px solid" : "none"}
