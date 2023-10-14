@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Input, Flex, Text, Popover, PopoverAnchor, PopoverContent, PopoverBody, VStack, Box, StackDivider, Spinner, HStack, Button, Progress, ProgressLabel, Stack } from '@chakra-ui/react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Input, Flex, Text, Popover, PopoverAnchor, PopoverContent, PopoverBody, VStack, Box, StackDivider, Spinner, HStack, Button, Progress, ProgressLabel, Stack, useColorMode } from '@chakra-ui/react';
 //import { getVectorsFromData } from '../utils';
 
 import { buildSearch } from 'search.ts';
@@ -7,11 +7,17 @@ import { SearchResult } from 'search.ts';
 
 import binarySearch from '../utils/binarySearch';
 import { getVectorsFromData } from '../utils';
+import Instructions from './Instructions';
+
+import { increaseNumberOfGames, increaseNumberOfVictories, setLastPlayed, lastPlayedToday, increaseStreak } from '../utils/cookies';
+import { toTitleCase, normalizeString, reducedNormalize } from '../utils/stringNormalization';
 
 var similarity = require( 'compute-cosine-similarity' );
 
 type AutocompleteProps = {
-    word: string
+    word: string,
+    finishOpen: Dispatch<SetStateAction<boolean>>,
+    setCanGiveUp: Dispatch<SetStateAction<boolean>>
 }
 
 function getColorScheme(sim:number) {
@@ -28,6 +34,7 @@ function getColorScheme(sim:number) {
 }
 
 function transformValue(sim:number, biggest_sim:number) {
+    if (sim == 100) return sim;
     return 99*sim/biggest_sim;
 }
 
@@ -49,15 +56,45 @@ function AutocompleteInput( props:AutocompleteProps ) {
     similarity:number
   }[]>([]);
   const [mostSimilar, setMostSimilar] = useState<number>(0);
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  function winGame() {
+    if (!lastPlayedToday()) {
+        let today = new Date();
+        setLastPlayed(today);
+        increaseNumberOfGames();
+        increaseNumberOfVictories();
+        increaseStreak();
+    }
+    setTimeout(() => {
+        props.finishOpen(true); // finishing
+    }, 1000);
+    props.setCanGiveUp(false);
+  }
+
+  function alreadyGuessed(movieTitle:string) {
+    for (let i = 0; i < similarities.length; i++) {
+        if (similarities[i].word == movieTitle) return true;
+    }
+    return false;
+  }
 
   useEffect(() => {
+    if (lastPlayedToday()) {
+        props.finishOpen(true);
+    }
+  })
+
+  useEffect(() => {
+    setSearch([]);
     setIsLoading(true);
     const delaySearch = setTimeout(() => {
         if (value.length >= 2) {
             setPopoverOpen(true);
             var results = [];
 
-            const searcher = buildSearch([value]);
+            //console.log('searcher', value, toTitleCase(value), normalizeString(value), reducedNormalize(value));
+            const searcher = buildSearch([value, toTitleCase(value), normalizeString(value), reducedNormalize(value)]);
             //console.log('Searching data...');
             let query:SearchResult[]|any[] = searcher.search(searchData);
             for (let i = 0; i < query.length; i++) {
@@ -80,10 +117,11 @@ function AutocompleteInput( props:AutocompleteProps ) {
                             display='flex'
                             alignItems='center'
                             justifyContent='center'
-                            key={searchData.slice(start+1, end).replaceAll('"', '')}
+                            key={(Math.random() + 1).toString(36).substring(7)}
                             >
                             <Button variant='ghost' size="sm" onClick={() => {
                                 setValue('');
+                                setSearch([]);
                                 setGuess(searchData.slice(start+1, end).replaceAll('"', ''));
                             }}>
                                 <Text>{searchData.slice(start+1, end).replaceAll('"', '')}</Text>
@@ -157,7 +195,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
             //@ts-ignore
             let sim = similarity(vectors.vectors[i].vector, currWord.vector);
             //@ts-ignore
-            if (sim > biggest_sim && sim != 1)
+            if (sim > biggest_sim && sim < 99.999>)
                 biggest_sim = sim
         }
         //console.log('biggest_sim', biggest_sim)
@@ -173,14 +211,18 @@ function AutocompleteInput( props:AutocompleteProps ) {
     if (guess && allWords && currWordData) {
         console.log('checking guess');
         let guessData = binarySearch(allWords, guess);
+        //@ts-ignore
+        let sim = Math.abs((similarity(currWordData.vector, guessData.vector)*100));
+        if (sim > 99.999) {
+            sim = 100;
+            winGame();
+        }
         let newGuess = {
             //@ts-ignore
             word: guessData.word,
-            //@ts-ignore
-            similarity: Math.abs((similarity(currWordData.vector, guessData.vector)*100).toFixed(1)),
+            similarity: sim,
         }
-        //console.log('guessData', guessData);
-        if (guessData !== -1 && !similarities.includes(newGuess)) {
+        if (guessData !== -1 && !alreadyGuessed(newGuess.word)) {
             const similarityArray = [...similarities, newGuess].sort((a, b) => {
                 if (a.similarity < b.similarity) return 1;
                 if (a.similarity > b.similarity) return -1;
@@ -223,7 +265,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
                 variant="responsive"
             >
                 <PopoverAnchor>
-                    <Input
+                    <Input size="lg"
                     placeholder='Type a movie or a tag'
                     variant="filled"
                     value={value}
@@ -248,6 +290,9 @@ function AutocompleteInput( props:AutocompleteProps ) {
                 </PopoverContent>
             </Popover>
         }
+        {similarities.length == 0 &&
+            <Instructions />
+        }
         <Stack spacing={2} marginY={5} w="100%">
             {similarities.map((el) => {
                 return (
@@ -257,8 +302,10 @@ function AutocompleteInput( props:AutocompleteProps ) {
                         borderRadius={5}
                         border={el.word === guess ? "2px solid" : "none"}
                         borderColor={el.word === guess ? "blue.500" : "none"}
+                        key={el.word}
                         >
-                        <ProgressLabel color="gray.900" fontSize="sm" textAlign="left" marginX={3} >{el.word}</ProgressLabel>
+                        <ProgressLabel color={colorMode == 'dark' ? "gray.900" : "white"}
+                            fontSize="sm" textAlign="left" marginX={3} >{el.word}</ProgressLabel>
                     </Progress>
                 )
             })}

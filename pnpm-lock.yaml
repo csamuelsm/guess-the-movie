@@ -28,9 +28,15 @@ dependencies:
   csv-parse:
     specifier: ^5.5.1
     version: 5.5.1
+  date-diff:
+    specifier: ^1.0.2
+    version: 1.0.2
   framer-motion:
     specifier: ^10.12.21
     version: 10.12.21(react-dom@18.2.0)(react@18.2.0)
+  js-cookie:
+    specifier: ^3.0.5
+    version: 3.0.5
   mnemonist:
     specifier: ^0.39.5
     version: 0.39.5
@@ -49,6 +55,9 @@ dependencies:
   react-icons:
     specifier: ^4.10.1
     version: 4.10.1(react@18.2.0)
+  react-web-share:
+    specifier: ^2.0.2
+    version: 2.0.2(react-dom@18.2.0)(react@18.2.0)
   search.ts:
     specifier: ^2.0.2
     version: 2.0.2
@@ -4732,6 +4741,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /date-diff@1.0.2:
+    resolution: {integrity: sha512-Z0OGfkOOEzhX3XRDZc5NMdP2tuJnHxOF1wW9D80jEXHpRcsEnDOa8TqH1wQLDEjWR7qvSNPHAxp8QOMXVxNqGw==}
+    dev: false
+
   /dateformat@3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
     dev: true
@@ -6485,6 +6498,11 @@ packages:
       supports-color: 8.1.1
     dev: false
 
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -7553,6 +7571,16 @@ packages:
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.6.0
+    dev: false
+
+  /react-web-share@2.0.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-bGm1TJc6xtC0MhAnYFsrzT4En7l2oAdLTgCK7nk7b4xGTg3L5gOldiPrmYQ8a/dEXNydgekvOj/tfjduIlIRVA==}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react@18.2.0:
