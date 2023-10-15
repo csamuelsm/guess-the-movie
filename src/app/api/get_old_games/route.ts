@@ -8,7 +8,7 @@ export const GET = async (req: Request) => {
         const file = '/games.csv';
         const fileDirectory = path.join(process.cwd(), 'public');
         const fileContent = await fs.readFile(fileDirectory + file, 'utf8');
-        const movies = fileContent.split(/\r\n/);
+        const movies = fileContent.split(/\r\n|\n/);
         //console.log(movies);
         const today = new Date();
         let diffMs = today.getTime() - startDate.getTime();
