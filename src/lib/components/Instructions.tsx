@@ -21,14 +21,14 @@ function Instructions() {
             <>
                 <Text marginY={3}>
                     The objective of the game is to <u><b>discover the secret movie</b></u> of the day. To do this, you must guess movies that you think are similar to the secret movie. You can guess as many times as you want.
-                    Type your guess in the above text input and selected the movie you want from the list.
+                    Type your guess in the above text input and select the movie you want from the list.
                 </Text>
             </>
         }
 
         {currInstr === 2 &&
             <Text marginY={3}>
-                An artificial intelligence algorithm will tell you <u><b>how similar</b></u> the movies you guessed are to the secret movie. It was trained on a large set of movies and calculated the similarity between movies <u><b>based on several tags</b></u> users assigned to each movie.
+                An artificial intelligence algorithm will tell you <u><b>how similar</b></u> the movies you guessed are to the secret movie. It was trained on a large set of movies and calculated the similarity between movies <u><b>based on several tags</b></u> users assigned to each movie. Sometimes the loading time is long because the AI model has a lot of data and it is necessary to load all this data and organize it.
             </Text>
         }
 
@@ -49,7 +49,7 @@ function Instructions() {
         {currInstr === 5 &&
             <>
                 <Text marginY={3}>
-                    You can give up at any time, but another game will be available only in the next day.
+                    You can give up at any time and another game will be available only in the next day. You can play the older games meanwhile, but it won't increase your streak count.
                     You can also play this game with a group, for example one person guessing a movie at each round.
                     Finally and most important, <u><b>have fun and happy playing!</b></u>
                 </Text>

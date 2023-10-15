@@ -1,5 +1,5 @@
-import { Box, Flex, Heading, IconButton } from '@chakra-ui/react';
-import { FaHandHoldingHeart, FaSignOutAlt } from 'react-icons/fa';
+import { Box, Flex, Heading, IconButton, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { FaHandHoldingHeart, FaBars, FaRegCommentAlt, FaRegFlag, FaRegLightbulb, FaRegCalendarAlt } from 'react-icons/fa';
 import { MdMovieFilter } from 'react-icons/md';
 
 import ThemeToggle from './ThemeToggle';
@@ -12,7 +12,11 @@ type HeaderProps = {
   finishOpen: Dispatch<SetStateAction<boolean>>,
   canGiveUp: boolean,
   setCanGiveUp: Dispatch<SetStateAction<boolean>>,
-  setDonation: Dispatch<SetStateAction<boolean>>
+  setDonation: Dispatch<SetStateAction<boolean>>,
+  setCredits: Dispatch<SetStateAction<boolean>>,
+  setOldGames: Dispatch<SetStateAction<boolean>>,
+  gameNumber: number,
+  isOld: boolean
 }
 
 const Header = (props:HeaderProps) => {
@@ -20,7 +24,7 @@ const Header = (props:HeaderProps) => {
 
   return (
     <Flex as="header" width="full" align="center">
-      <GiveUpModal open={giveUp} setOpen={setGiveUp} setFinishOpen={props.finishOpen} setCanGiveUp={props.setCanGiveUp} />
+      <GiveUpModal open={giveUp} setOpen={setGiveUp} setFinishOpen={props.finishOpen} setCanGiveUp={props.setCanGiveUp} gameNumber={props.gameNumber} isOld={props.isOld} />
       <Box>
         <Heading as="h1" size="md" display="flex" flexDirection="row" alignItems="center">
           <MdMovieFilter /> GuessTheMovie
@@ -30,7 +34,7 @@ const Header = (props:HeaderProps) => {
         <Box marginX={1.5}>
           <IconButton
             aria-label="give up"
-            icon={<FaSignOutAlt />}
+            icon={<FaRegFlag />}
             isDisabled={props.canGiveUp}
             onClick={() => {
               setGiveUp(true);
@@ -38,13 +42,34 @@ const Header = (props:HeaderProps) => {
           />
         </Box>
         <Box marginX={1.5}>
-          <IconButton
+          {/*<IconButton
             aria-label="donate"
             icon={<FaHandHoldingHeart />}
             onClick={() => {
               props.setDonation(true);
             }}
-          />
+          />*/}
+          <Menu>
+            <MenuButton as={IconButton} icon={<FaBars />} />
+            <MenuList>
+              <MenuItem icon={<FaRegCalendarAlt/>} onClick={() => {
+                props.setOldGames(true);
+              }}>
+                Old games
+              </MenuItem>
+              <MenuItem icon={<FaHandHoldingHeart/>} onClick={() => {
+                props.setDonation(true);
+              }}>Donate</MenuItem>
+              <MenuItem icon={<FaRegCommentAlt/>}>
+                Feedback
+              </MenuItem>
+              <MenuItem icon={<FaRegLightbulb/>} onClick={() => {
+                props.setCredits(true);
+              }}>
+                Credits
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
         <Box marginX={1.5}>
           <ThemeToggle />

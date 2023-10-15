@@ -28,6 +28,11 @@ export function getStreak() {
     else return 0;
 }
 
+export function getGamesPlayed() {
+    if (cookieExist('games_played')) return getCookie('games_played');
+    else return [];
+}
+
 export function cookieExist(cookieName:string) {
     let res = getCookie(cookieName);
     if (res) return true;
@@ -94,4 +99,28 @@ export function increaseStreak() {
 
 export function resetStreak() {
     Cookies.set('streak', 0);
+}
+
+export function alreadyPlayedThisGame(gameNumber:number) {
+    if (cookieExist('games_played')) {
+        let games_played = JSON.parse(getCookie('games_played'));
+        //console.log('game_played', JSON.parse(getCookie('games_played')));
+        if (games_played.includes(gameNumber) || games_played.includes(gameNumber.toString())) return true;
+        else return false;
+    } else return false;
+}
+
+export function addGamePlayed(gameNumber:number) {
+    if (cookieExist('games_played')) {
+        let games_played = JSON.parse(getCookie('games_played'));
+        //console.log('addGamePlayed', games_played);
+        if (games_played.includes(gameNumber)) return;
+        else {
+            games_played.push(gameNumber.toString());
+            Cookies.set('games_played', JSON.stringify(games_played));
+        }
+        //console.log(getCookie('games_played'));
+    } else {
+        Cookies.set('games_played', JSON.stringify([gameNumber.toString()]));
+    }
 }

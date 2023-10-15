@@ -2,6 +2,8 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useSta
 import { Input, Flex, Text, Popover, PopoverAnchor, PopoverContent, PopoverBody, VStack, Box, StackDivider, Spinner, HStack, Button, Progress, ProgressLabel, Stack, useColorMode } from '@chakra-ui/react';
 //import { getVectorsFromData } from '../utils';
 
+import { notFound } from 'next/navigation'
+
 import { buildSearch } from 'search.ts';
 import { SearchResult } from 'search.ts';
 
@@ -9,7 +11,7 @@ import binarySearch from '../utils/binarySearch';
 import { getVectorsFromData } from '../utils';
 import Instructions from './Instructions';
 
-import { increaseNumberOfGames, increaseNumberOfVictories, setLastPlayed, lastPlayedToday, increaseStreak } from '../utils/cookies';
+import { increaseNumberOfGames, increaseNumberOfVictories, setLastPlayed, lastPlayedToday, increaseStreak, alreadyPlayedThisGame, addGamePlayed } from '../utils/cookies';
 import { toTitleCase, normalizeString, reducedNormalize } from '../utils/stringNormalization';
 
 var similarity = require( 'compute-cosine-similarity' );
@@ -17,7 +19,9 @@ var similarity = require( 'compute-cosine-similarity' );
 type AutocompleteProps = {
     word: string,
     finishOpen: Dispatch<SetStateAction<boolean>>,
-    setCanGiveUp: Dispatch<SetStateAction<boolean>>
+    setCanGiveUp: Dispatch<SetStateAction<boolean>>,
+    gameNumber: number,
+    oldGame: boolean,
 }
 
 function getColorScheme(sim:number) {
@@ -62,9 +66,13 @@ function AutocompleteInput( props:AutocompleteProps ) {
     if (!lastPlayedToday()) {
         let today = new Date();
         setLastPlayed(today);
+        if (!props.oldGame)
+            increaseStreak();
+    }
+    if (!alreadyPlayedThisGame(props.gameNumber)) {
         increaseNumberOfGames();
+        addGamePlayed(props.gameNumber);
         increaseNumberOfVictories();
-        increaseStreak();
     }
     setTimeout(() => {
         props.finishOpen(true); // finishing
@@ -80,10 +88,10 @@ function AutocompleteInput( props:AutocompleteProps ) {
   }
 
   useEffect(() => {
-    if (lastPlayedToday()) {
+    if ((!props.oldGame && lastPlayedToday()) || (props.oldGame && alreadyPlayedThisGame(props.gameNumber))) {
         props.finishOpen(true);
     }
-  })
+  }, []);
 
   useEffect(() => {
     setSearch([]);
@@ -94,7 +102,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
             var results = [];
 
             //console.log('searcher', value, toTitleCase(value), normalizeString(value), reducedNormalize(value));
-            const searcher = buildSearch([value, toTitleCase(value), normalizeString(value), reducedNormalize(value)]);
+            const searcher = buildSearch([value, toTitleCase(value), normalizeString(value), reducedNormalize(value), value.toUpperCase()]);
             //console.log('Searching data...');
             let query:SearchResult[]|any[] = searcher.search(searchData);
             for (let i = 0; i < query.length; i++) {
@@ -133,6 +141,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
                 } catch(e) {
                     //TODO: DISPLAY ERROR MESSAGE
                     console.log((e as Error).message);
+                    return notFound();
                 }
             }
             setIsLoading(false);
@@ -232,7 +241,11 @@ function AutocompleteInput( props:AutocompleteProps ) {
             setSimilarities(similarityArray);
             //@ts-ignore
             //console.log('similarity:',(similarity(currWordData.vector, guessData.vector)*100).toFixed(1));
-        } //TODO: else SHOW ERROR MESSAGE
+        } else {
+            //TODO: else SHOW ERROR MESSAGE
+            //throw Error('Something went wrong and we don\'t know what :(');
+            return notFound();
+        }
     }
   }, [guess]);
 
@@ -256,6 +269,8 @@ function AutocompleteInput( props:AutocompleteProps ) {
             </VStack>}
 
         {status === null &&
+        <>
+            <Text fontSize="xs"><b>Game</b> {'#'}{props.gameNumber} / <b>Nº of guesses:</b> {similarities.length}</Text>
             <Popover
                 isOpen={popoverOpen}
                 closeOnBlur={false}
@@ -266,7 +281,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
             >
                 <PopoverAnchor>
                     <Input size="lg"
-                    placeholder='Type a movie or a tag'
+                    placeholder='Type a movie title'
                     variant="filled"
                     value={value}
                     onChange={handleChange}
@@ -289,6 +304,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
                     </PopoverBody>
                 </PopoverContent>
             </Popover>
+        </>
         }
         {similarities.length == 0 &&
             <Instructions />

@@ -1,22 +1,27 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button } from '@chakra-ui/react'
 import { FaSignOutAlt } from 'react-icons/fa';
-import { setLastPlayed, increaseNumberOfGames, resetStreak } from '../utils/cookies';
+import { setLastPlayed, increaseNumberOfGames, resetStreak, addGamePlayed } from '../utils/cookies';
 
 type ModalProps = {
     open: boolean,
     setOpen: Dispatch<SetStateAction<boolean>>,
     setFinishOpen: Dispatch<SetStateAction<boolean>>,
-    setCanGiveUp: Dispatch<SetStateAction<boolean>>
+    setCanGiveUp: Dispatch<SetStateAction<boolean>>,
+    gameNumber: number,
+    isOld: boolean
 }
 
 function GiveUpModal(props:ModalProps) {
 
   function giveUp() {
-    let today = new Date();
-    setLastPlayed(today);
+    if (!props.isOld) {
+        let today = new Date();
+        setLastPlayed(today);
+    }
     increaseNumberOfGames();
     resetStreak();
+    addGamePlayed(props.gameNumber);
     props.setCanGiveUp(false);
     props.setOpen(false);
     props.setFinishOpen(true);
