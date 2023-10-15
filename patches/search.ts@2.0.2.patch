@@ -1,0 +1,73 @@
+diff --git a/index.ts b/index.ts
+index 53332a4cea12a6232c034fb3765366fad489bc9b..653b37138c2774c209af77a27f8d3f1ff9a0673f 100644
+--- a/index.ts
++++ b/index.ts
+@@ -1,6 +1,29 @@
+-import { buildSearch, treeBreadthFirstSearch, treeDepthFirstSearch } from './src/core'
+-import { SearchTreeNode, SearchResult, Search, Describe } from './src/types'
++export { buildSearch, treeBreadthFirstSearch, treeDepthFirstSearch } from './src/core'
+ 
+-export { buildSearch, Search, SearchResult, SearchTreeNode, treeBreadthFirstSearch, treeDepthFirstSearch, Describe }
++interface SearchTreeNode {
++    isEnd?: boolean;
++    name?: string;
++    children: Map<string, SearchTreeNode>;
++    failPointer?: SearchTreeNode;
++    parent?: SearchTreeNode;
++    length: number;
++}
++
++interface SearchResult {
++    word?: string;
++    start?: number;
++    end?: number;
++}
++
++type Formatter = (result: unknown[], word: string, start: number, end: number) => void
++
++interface Search {
++    search(content: string, formatter?: Formatter): unknown[] | SearchResult[]
++}
++
++interface Describe {
++    <T>(node: T): boolean
++}
++
++export type { SearchTreeNode, SearchResult, Search, Describe }
+ 
+-export default buildSearch
+diff --git a/src/types.ts b/src/types.ts
+index 4e6beb980c36a5aa8318a2b0fa95f5a0131514de..e4e43bca9639f53e45fad8d73be0dd100b8452de 100644
+--- a/src/types.ts
++++ b/src/types.ts
+@@ -1,4 +1,4 @@
+-export interface SearchTreeNode {
++interface SearchTreeNode {
+     isEnd?: boolean;
+     name?: string;
+     children: Map<string, SearchTreeNode>;
+@@ -7,18 +7,20 @@ export interface SearchTreeNode {
+     length: number;
+ }
+ 
+-export interface SearchResult {
++interface SearchResult {
+     word?: string;
+     start?: number;
+     end?: number;
+ }
+ 
+-export type Formatter = (result: unknown[], word: string, start: number, end: number) => void
++type Formatter = (result: unknown[], word: string, start: number, end: number) => void
+ 
+-export interface Search {
++interface Search {
+     search(content: string, formatter?: Formatter): unknown[] | SearchResult[]
+ }
+ 
+-export interface Describe {
++interface Describe {
+     <T>(node: T): boolean
+ }
++
++export type { SearchTreeNode, SearchResult, Search, Describe }

@@ -4,8 +4,8 @@ import { Input, Flex, Text, Popover, PopoverAnchor, PopoverContent, PopoverBody,
 
 import { notFound } from 'next/navigation'
 
-import { buildSearch } from 'search.ts';
-import { SearchResult } from 'search.ts';
+import { buildSearch } from '../utils/search.ts';
+import { SearchResult } from '../utils/search.ts';
 
 import binarySearch from '../utils/binarySearch';
 import { getVectorsFromData } from '../utils';
