@@ -23,4 +23,4 @@ interface Describe {
     <T>(node: T): boolean
 }
 
-export { SearchTreeNode, SearchResult, Search, Describe }
+export { SearchTreeNode, SearchResult, Search, Describe, Formatter }

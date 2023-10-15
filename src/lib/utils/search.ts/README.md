@@ -1,9 +1,11 @@
 # search.ts
+
 Searches for the target string in the string.
 Use the Aho-Corasick automaton when search many words.
 Use the KMP when search single word.
 
 # How To Use
+
 ```
 npm install search.ts
 
@@ -30,45 +32,51 @@ console.log(searcher.search(article))
 * ]
 */
 ```
-# Document
-### API
-- **buildSearch**
-   - buildSearch(searchStr: string | string[]): **Search** (it will build a match-words-tree and returns an object with search func.)
-      - searchStr: The string what you want to find. Can be single word or word array.
-      - Search: An object with search function.
 
-- **search** 
-   - search(content: string, formatter?: **Formatter**): **SearchResult** []
-      - content: The original string.
-      - formatter: The custom function. Please refer to the documentation for details.
-      - SearchResult: The search result array. You can pass function 'formatter' to change its structure.
+# Document
+
+### API
+
+- **buildSearch**
+
+  - buildSearch(searchStr: string | string[]): **Search** (it will build a match-words-tree and returns an object with search func.)
+    - searchStr: The string what you want to find. Can be single word or word array.
+    - Search: An object with search function.
+
+- **search**
+
+  - search(content: string, formatter?: **Formatter**): **SearchResult** []
+    - content: The original string.
+    - formatter: The custom function. Please refer to the documentation for details.
+    - SearchResult: The search result array. You can pass function 'formatter' to change its structure.
 
 - **formatter** (You can pass this function to customize search result)
-   - formatter(result: [], word: string, start: number, end: number): void
-      - result: The function 'search' return
-      - word: Matched word
-      - start: Matched word start index in content
-      - end: Matched word end index in content
+  - formatter(result: [], word: string, start: number, end: number): void
+    - result: The function 'search' return
+    - word: Matched word
+    - start: Matched word start index in content
+    - end: Matched word end index in content
 - **treeDepthFirstSearch** (depth first search in tree)
-   - treeDepthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string)
-      - tree: A tree-shape object which every node may has children.
-      - describe: The function with every node as param with boolean return, using for find target node.
-      - childKey: Every node's children key, default is 'children'.
+  - treeDepthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string)
+    - tree: A tree-shape object which every node may has children.
+    - describe: The function with every node as param with boolean return, using for find target node.
+    - childKey: Every node's children key, default is 'children'.
 - **treeBreadthFirstSearch** (breadth first search in tree)
-   - treeBreadthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string)
-      - tree: A tree-shape object which every node may has children.
-      - describe: The function with every node as param with boolean return, using for find target node.
-      - childKey: Every node's children key, default is 'children'.
-      
+  - treeBreadthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string)
+    - tree: A tree-shape object which every node may has children.
+    - describe: The function with every node as param with boolean return, using for find target node.
+    - childKey: Every node's children key, default is 'children'.
+
 ### Attribute
+
     SearchResult {
         word?: string,
         start?: number,
         end?: number,
     }
-    
+
     Formatter = (result: SearchResult[], word: string, start: number, end: number) => void
-    
+
     Search {
         search(content: string, formatter?: Formatter): SearchResult[]
     }
