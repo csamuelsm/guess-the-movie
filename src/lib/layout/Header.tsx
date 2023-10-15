@@ -60,7 +60,7 @@ const Header = (props:HeaderProps) => {
               <MenuItem icon={<FaHandHoldingHeart/>} onClick={() => {
                 props.setDonation(true);
               }}>Donate</MenuItem>
-              <MenuItem icon={<FaRegCommentAlt/>}>
+              <MenuItem as='a' href='https://forms.gle/32FbMft1d9hiVep49' icon={<FaRegCommentAlt/>}>
                 Feedback
               </MenuItem>
               <MenuItem icon={<FaRegLightbulb/>} onClick={() => {
