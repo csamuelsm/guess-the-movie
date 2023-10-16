@@ -14,6 +14,8 @@ export async function getMostSimilarTags(target:string, guess:string, tagData:Ta
         return new Promise((res, rej) => {
             //if (el.movie != target && el.movie != guess) rej();
             if (el.title == target || el.title == guess) {
+                if (el.title == target) target_tags = el.tags;
+                if (el.title == guess) guess_tags = el.tags;
                 return Promise.all(el.tags.map((tag) => {
                     return new Promise((res, rej) => {
                         if (!(tag in most_similar)) res(most_similar[tag] = 1);
@@ -39,7 +41,8 @@ export async function getMostSimilarTags(target:string, guess:string, tagData:Ta
         else most_similar[guess_tags[i]] += 1;
     }*/
 
-    let keys = Object.keys(most_similar);
+    //let keys = Object.keys(most_similar);
+    let keys = target_tags.filter(value => guess_tags.includes(value));
     keys.sort(function(a, b) {
         return most_similar[b] - most_similar[a];
     });
