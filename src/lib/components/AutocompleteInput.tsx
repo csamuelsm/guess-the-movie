@@ -10,6 +10,7 @@ import { SearchResult } from '../utils/search.ts';
 import binarySearch from '../utils/binarySearch';
 import { getVectorsFromData } from '../utils';
 import Instructions from './Instructions';
+import SimilarTags from './SimilarTags';
 
 import { increaseNumberOfGames, increaseNumberOfVictories, setLastPlayed, lastPlayedToday, increaseStreak, alreadyPlayedThisGame, addGamePlayed } from '../utils/cookies';
 import { toTitleCase, normalizeString, reducedNormalize } from '../utils/stringNormalization';
@@ -312,17 +313,25 @@ function AutocompleteInput( props:AutocompleteProps ) {
         <Stack spacing={2} marginY={5} w="100%">
             {similarities.map((el) => {
                 return (
+                    <Box key={el.word}>
                     <Progress value={transformValue(el.similarity, mostSimilar)}
                         colorScheme={getColorScheme(transformValue(el.similarity, mostSimilar))}
                         height={30}
                         borderRadius={5}
                         border={el.word === guess ? "2px solid" : "none"}
                         borderColor={el.word === guess ? "blue.500" : "none"}
-                        key={el.word}
+                        marginBottom={0}
                         >
                         <ProgressLabel color={colorMode == 'dark' ? "gray.900" : "white"}
                             fontSize="sm" textAlign="left" marginX={3} >{el.word}</ProgressLabel>
                     </Progress>
+                    {transformValue(el.similarity, mostSimilar) >= 25 && transformValue(el.similarity, mostSimilar) < 99.999 &&
+                        <SimilarTags target={props.word} guess={el.word} />
+                    }
+                    {transformValue(el.similarity, mostSimilar) < 25 &&
+                        <Text fontSize="xs" marginTop={0} color='red.500'>Similarity too small to get tags.</Text>
+                    }
+                    </Box>
                 )
             })}
         </Stack>
