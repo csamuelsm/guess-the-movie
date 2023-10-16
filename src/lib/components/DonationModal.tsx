@@ -24,7 +24,7 @@ function DonationModal(props:ModalProps) {
                 </Text>
                 <Flex flexDirection="column" gap={2} marginY={3}>
                     <Link href='https://github.com/sponsors/csamuelsm' isExternal>
-                        <Button w='100%' leftIcon={<FaGithubAlt/>} variant='outline' colorScheme='blue' isDisabled={true}>
+                        <Button w='100%' leftIcon={<FaGithubAlt/>} variant='outline' colorScheme='blue'>
                             Github Sponsors
                         </Button>
                     </Link>
