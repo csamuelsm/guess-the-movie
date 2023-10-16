@@ -50,8 +50,12 @@ function SimilarTags(props:SimilarTagsProps) {
         </Flex>
         }
 
-        {!isLoading &&
+        {!isLoading && top.length > 0 &&
             <Text fontSize="xs" marginTop={0}>Top similar tags: {top.join(', ')}</Text>
+        }
+
+        {!isLoading && top.length == 0 &&
+            <Text fontSize="xs" marginTop={0}>No similar tags</Text>
         }
 
         {error &&
