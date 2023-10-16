@@ -43,12 +43,13 @@ export async function getMostSimilarTags(target:string, guess:string, tagData:Ta
 
     //let keys = Object.keys(most_similar);
     let keys = target_tags.filter(value => guess_tags.includes(value));
-    keys.sort(function(a, b) {
+    let keys_unique = keys.filter((value, index, array) => array.indexOf(value) === index);
+    keys_unique.sort(function(a, b) {
         return most_similar[b] - most_similar[a];
     });
 
     //console.log('most_similar', keys.slice(0, 3));
 
-    if (keys.length >= 3) return keys.slice(0, 2);
-    else return keys;
+    if (keys_unique.length >= 2) return keys_unique.slice(0, 2);
+    else return keys_unique;
 }
