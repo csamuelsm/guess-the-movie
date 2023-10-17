@@ -39,12 +39,11 @@ function DonationModal(props:ModalProps) {
                     }}>
                         Pix
                     </Button>
-                    <Button w='100%' leftIcon={<FaPaypal/>} variant='outline' colorScheme='blue'
-                        onClick={() => {
-                            props.pixModal(true);
-                        }}>
-                        PayPal
-                    </Button>
+                    <Link href='https://www.paypal.com/donate/?hosted_button_id=DE9ZRCNT78QW4' isExternal>
+                        <Button w='100%' leftIcon={<FaPaypal/>} variant='outline' colorScheme='blue'>
+                            PayPal
+                        </Button>
+                    </Link>
                 </Flex>
             </ModalBody>
             {/*<ModalFooter>
