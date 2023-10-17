@@ -23,6 +23,14 @@ type AutocompleteProps = {
     setCanGiveUp: Dispatch<SetStateAction<boolean>>,
     gameNumber: number,
     oldGame: boolean,
+    setBlue: Dispatch<SetStateAction<number>>,
+    setGreen: Dispatch<SetStateAction<number>>,
+    setYellow: Dispatch<SetStateAction<number>>,
+    setRed: Dispatch<SetStateAction<number>>,
+    blue: number,
+    green: number,
+    yellow:number,
+    red: number,
 }
 
 function getColorScheme(sim:number) {
@@ -62,6 +70,14 @@ function AutocompleteInput( props:AutocompleteProps ) {
   }[]>([]);
   const [mostSimilar, setMostSimilar] = useState<number>(0);
   const { colorMode, toggleColorMode } = useColorMode();
+
+  function increaseCorrespondingColor(val:number) {
+    let color = getColorScheme(val);
+    if (color == 'blue') props.setBlue(props.blue+1);
+    else if (color == 'green') props.setGreen(props.green+1);
+    else if (color == 'yellow') props.setYellow(props.yellow+1);
+    else if (color == 'pink') props.setRed(props.red+1);
+  }
 
   function winGame() {
     if (!lastPlayedToday()) {
@@ -227,6 +243,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
             sim = 100;
             winGame();
         }
+        increaseCorrespondingColor(transformValue(sim, mostSimilar));
         let newGuess = {
             //@ts-ignore
             word: guessData.word,

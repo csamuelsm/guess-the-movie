@@ -26,6 +26,11 @@ export default function Home () {
   const [movie, setMovie] = useState<string|null>(null);
   const [gameNumber, setGameNumber] = useState<number>(0);
 
+  const [blue, setBlue] = useState<number>(0);
+  const [green, setGreen] = useState<number>(0);
+  const [yellow, setYellow] = useState<number>(0);
+  const [red, setRed] = useState<number>(0);
+
   useEffect(() => {
 
     setCanGiveUp(lastPlayedToday());
@@ -62,8 +67,13 @@ export default function Home () {
       {movie === null && <Spinner />}
       {movie !== null && gameNumber > 0 &&
       <>
-        <FinishModal open={finishModal} setOpen={setFinishModal} answer={movie} setDonation={setDonationModal} gameNumber={gameNumber} />
-        <AutocompleteInput word={movie} finishOpen={setFinishModal} setCanGiveUp={setCanGiveUp} gameNumber={gameNumber} oldGame={false} />
+        <FinishModal open={finishModal} setOpen={setFinishModal} answer={movie} setDonation={setDonationModal} gameNumber={gameNumber}
+        blue={blue} green={green} yellow={yellow} red={red}
+        />
+
+        <AutocompleteInput word={movie} finishOpen={setFinishModal} setCanGiveUp={setCanGiveUp} gameNumber={gameNumber} oldGame={false}
+        setBlue={setBlue} setGreen={setGreen} setYellow={setYellow} setRed={setRed} blue={blue} green={green} yellow={yellow} red={red}
+        />
       </>
       }
       <Footer setDonation={setDonationModal} />

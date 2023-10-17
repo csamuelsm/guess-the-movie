@@ -14,6 +14,10 @@ type ModalProps = {
     answer: string,
     setDonation: Dispatch<SetStateAction<boolean>>,
     gameNumber: number,
+    blue:number,
+    green:number,
+    yellow:number,
+    red:number
 }
 
 function FinishModal(props:ModalProps) {
@@ -98,7 +102,7 @@ function FinishModal(props:ModalProps) {
             <ModalFooter>
                 <RWebShare
                     data={{
-                        text: `#GuessTheMovie${props.gameNumber}🎥%0D%0A%0D%0A🏆 Current Streak: ${getStreak()}%0D%0A🎉 I guessed the movie in ${getVictoriesPercentage()}% of my games!%0D%0A%0D%0A`,
+                        text: encodeURIComponent(`🎥 GuessTheMovie #${props.gameNumber}\n\n🔵 ${props.blue}\n🟢 ${props.green}\n🟡 ${props.yellow}\n🔴 ${props.red}\n\n🏆 My current Streak: ${getStreak()}\n🎉 I guessed the movie in ${getVictoriesPercentage()}% of my games!\n\n`),
                         url: window.location.href,
                         title: "GuessTheMovie",
                     }}
