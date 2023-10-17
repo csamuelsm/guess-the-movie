@@ -114,7 +114,9 @@ function FinishModal(props:ModalProps) {
                 <Button colorScheme='green' variant='outline' rightIcon={<FaHandHoldingHeart />}
                     onClick={() => {
                         props.setDonation(true);
-                    }}>
+                    }}
+                    disableNative={true}
+                    >
                     Donate
                 </Button>
             </ModalFooter>
