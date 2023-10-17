@@ -1,6 +1,6 @@
 import { Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Flex, Link } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
-import { FaGithubAlt, FaCoffee } from 'react-icons/fa';
+import { FaGithubAlt, FaCoffee, FaPaypal } from 'react-icons/fa';
 import { FaPix } from 'react-icons/fa6';
 
 type ModalProps = {
@@ -24,7 +24,7 @@ function DonationModal(props:ModalProps) {
                 </Text>
                 <Flex flexDirection="column" gap={2} marginY={3}>
                     <Link href='https://github.com/sponsors/csamuelsm' isExternal>
-                        <Button w='100%' leftIcon={<FaGithubAlt/>} variant='outline' colorScheme='blue'>
+                        <Button w='100%' leftIcon={<FaGithubAlt/>} variant='outline' colorScheme='gray'>
                             Github Sponsors
                         </Button>
                     </Link>
@@ -38,6 +38,12 @@ function DonationModal(props:ModalProps) {
                         props.pixModal(true);
                     }}>
                         Pix
+                    </Button>
+                    <Button w='100%' leftIcon={<FaPaypal/>} variant='outline' colorScheme='blue'
+                        onClick={() => {
+                            props.pixModal(true);
+                        }}>
+                        PayPal
                     </Button>
                 </Flex>
             </ModalBody>
