@@ -106,6 +106,7 @@ function FinishModal(props:ModalProps) {
                         url: window.location.href,
                         title: "GuessTheMovie",
                     }}
+                    disableNative={true}
                 >
                 <Button marginX={2} rightIcon={<FaShareAlt />}>
                     Share
@@ -115,7 +116,6 @@ function FinishModal(props:ModalProps) {
                     onClick={() => {
                         props.setDonation(true);
                     }}
-                    disableNative={true}
                     >
                     Donate
                 </Button>
