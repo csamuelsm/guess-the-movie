@@ -49,6 +49,8 @@ const RootLayout = ({ children }: RootLayoutProps) => {
         <Providers>
           <Layout>{children}</Layout>
           <Analytics />
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1009095463777730"
+            crossorigin="anonymous"></script>
         </Providers>
       </body>
     </html>
