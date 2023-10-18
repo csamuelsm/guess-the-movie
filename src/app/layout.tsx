@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Providers from '~/app/providers';
 import Layout from '~/lib/layout';
 import { Analytics } from '@vercel/analytics/react';
+import Script from 'next/script';
 
 type RootLayoutProps = {
   children: React.ReactNode;
@@ -49,8 +50,9 @@ const RootLayout = ({ children }: RootLayoutProps) => {
         <Providers>
           <Layout>{children}</Layout>
           <Analytics />
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1009095463777730"
-            crossorigin="anonymous"></script>
+          <Script async strategy="afterInteractive" id="adsbygoogle-init"
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1009095463777730"
+            crossOrigin="anonymous"></Script>
         </Providers>
       </body>
     </html>
