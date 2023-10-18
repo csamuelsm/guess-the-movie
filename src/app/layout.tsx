@@ -53,6 +53,16 @@ const RootLayout = ({ children }: RootLayoutProps) => {
           <Script async strategy="afterInteractive" id="adsbygoogle-init"
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1009095463777730"
             crossOrigin="anonymous"></Script>
+          <Script src="https://www.googletagmanager.com/gtag/js?id=G-2PXQWQ0MM6" />
+          <Script id="google-analytics">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-2PXQWQ0MM6');
+            `}
+          </Script>
         </Providers>
       </body>
     </html>
