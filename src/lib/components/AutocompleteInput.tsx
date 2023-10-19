@@ -11,6 +11,7 @@ import binarySearch from '../utils/binarySearch';
 import { getVectorsFromData } from '../utils';
 import Instructions from './Instructions';
 import SimilarTags from './SimilarTags';
+import JSConfetti from 'js-confetti'
 
 import { increaseNumberOfGames, increaseNumberOfVictories, setLastPlayed, lastPlayedToday, increaseStreak, alreadyPlayedThisGame, addGamePlayed } from '../utils/cookies';
 import { toTitleCase, normalizeString, reducedNormalize } from '../utils/stringNormalization';
@@ -80,6 +81,11 @@ function AutocompleteInput( props:AutocompleteProps ) {
   }
 
   function winGame() {
+    const jsConfetti = new JSConfetti();
+    jsConfetti.addConfetti({
+        confettiNumber: 100,
+        confettiRadius: 4
+    })
     if (!lastPlayedToday()) {
         let today = new Date();
         setLastPlayed(today);
