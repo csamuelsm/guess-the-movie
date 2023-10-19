@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, IconButton, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { Box, Flex, Heading, IconButton, Menu, MenuButton, MenuList, MenuItem, Link } from '@chakra-ui/react';
 import { FaHandHoldingHeart, FaBars, FaRegCommentAlt, FaRegFlag, FaRegLightbulb, FaRegCalendarAlt } from 'react-icons/fa';
 import { MdMovieFilter } from 'react-icons/md';
 
@@ -27,7 +27,7 @@ const Header = (props:HeaderProps) => {
       <GiveUpModal open={giveUp} setOpen={setGiveUp} setFinishOpen={props.finishOpen} setCanGiveUp={props.setCanGiveUp} gameNumber={props.gameNumber} isOld={props.isOld} />
       <Box>
         <Heading as="h1" size="md" display="flex" flexDirection="row" alignItems="center">
-          <MdMovieFilter /> GuessTheMovie
+          <MdMovieFilter /> <Link href='/'>GuessTheMovie</Link>
         </Heading>
       </Box>
       <Flex flexDirection="row" alignItems="flex-end" justifyContent="flex-end" w="100%">

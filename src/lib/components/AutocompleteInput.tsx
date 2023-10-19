@@ -333,7 +333,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
                     <Box key={el.word}>
                     <Progress value={transformValue(el.similarity, mostSimilar)}
                         colorScheme={getColorScheme(transformValue(el.similarity, mostSimilar))}
-                        height={30}
+                        height={transformValue(el.similarity, mostSimilar) >= 99.999 ? 37 : 30}
                         borderRadius={5}
                         border={el.word === guess ? "2px solid" : "none"}
                         borderColor={el.word === guess ? "blue.500" : "none"}
@@ -342,6 +342,9 @@ function AutocompleteInput( props:AutocompleteProps ) {
                         <ProgressLabel color={colorMode == 'dark' ? "gray.900" : "white"}
                             fontSize="sm" textAlign="left" marginX={3} >{el.word}</ProgressLabel>
                     </Progress>
+                    {transformValue(el.similarity, mostSimilar) >= 99.999 &&
+                        <Text fontSize="xs" marginTop={0}><b>You won!</b></Text>
+                    }
                     {transformValue(el.similarity, mostSimilar) >= 25 && transformValue(el.similarity, mostSimilar) < 99.999 &&
                         <SimilarTags target={props.word} guess={el.word} />
                     }
