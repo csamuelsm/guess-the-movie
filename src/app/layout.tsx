@@ -30,6 +30,8 @@ export const metadata: Metadata = {
   themeColor: '#FFFFFF',
   openGraph: {
     url: 'https://guess-the-movie-one.vercel.app/',
+    siteName: 'Guess the Movie',
+    locale: 'en',
     title: 'GuessTheMovie',
     description: 'The objective of the game Guess The Movie is to discover the secret movie of the day. To do this, you must guess movies that you think are similar to the secret movie.  It is similar to games like Wordle and Contexto.',
     images: {
