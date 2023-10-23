@@ -31,7 +31,7 @@ function OldGamesModal(props:ModalProps) {
   })
 
   return (
-    <Modal onClose={() => props.setOpen(false)} size='sm' isOpen={props.open} isCentered>
+    <Modal onClose={() => props.setOpen(false)} size='sm' isOpen={props.open} isCentered scrollBehavior='inside'>
         <ModalOverlay />
         <ModalContent>
             <ModalHeader>

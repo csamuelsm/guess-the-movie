@@ -7,6 +7,7 @@ import { FaHandHoldingHeart, FaShareAlt } from 'react-icons/fa';
 import { getLastPlayed, getNumberOfGames, getNumberOfVictories, getVictoriesPercentage, getStreak } from '../utils/cookies';
 import CountDown from './CountDown';
 import { RWebShare } from "react-web-share";
+import { track } from '@vercel/analytics';
 
 type ModalProps = {
     open: boolean,
@@ -107,6 +108,9 @@ function FinishModal(props:ModalProps) {
                         title: "GuessTheMovie",
                     }}
                     disableNative={true}
+                    onClick={() => {
+                        track('Share');
+                    }}
                 >
                 <Button marginX={2} rightIcon={<FaShareAlt />}>
                     Share
@@ -114,6 +118,7 @@ function FinishModal(props:ModalProps) {
                 </RWebShare>
                 <Button colorScheme='green' variant='outline' rightIcon={<FaHandHoldingHeart />}
                     onClick={() => {
+                        track('Donation');
                         props.setDonation(true);
                     }}
                     >

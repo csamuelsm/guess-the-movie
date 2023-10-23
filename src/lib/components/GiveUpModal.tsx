@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button } from '@chakra-ui/react'
 import { FaSignOutAlt } from 'react-icons/fa';
 import { setLastPlayed, increaseNumberOfGames, resetStreak, addGamePlayed } from '../utils/cookies';
+import { track } from '@vercel/analytics';
 
 type ModalProps = {
     open: boolean,
@@ -15,6 +16,7 @@ type ModalProps = {
 function GiveUpModal(props:ModalProps) {
 
   function giveUp() {
+    track('Give up');
     if (!props.isOld) {
         let today = new Date();
         setLastPlayed(today);
