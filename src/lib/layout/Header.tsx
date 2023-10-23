@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, IconButton, Menu, MenuButton, MenuList, MenuItem, Link } from '@chakra-ui/react';
-import { FaHandHoldingHeart, FaBars, FaRegCommentAlt, FaRegFlag, FaRegLightbulb, FaRegCalendarAlt } from 'react-icons/fa';
+import { FaLanguage, FaHandHoldingHeart, FaBars, FaRegCommentAlt, FaRegFlag, FaRegLightbulb, FaRegCalendarAlt } from 'react-icons/fa';
 import { MdMovieFilter } from 'react-icons/md';
 
 import ThemeToggle from './ThemeToggle';
@@ -67,6 +67,9 @@ const Header = (props:HeaderProps) => {
                 props.setCredits(true);
               }}>
                 Credits
+              </MenuItem>
+              <MenuItem as='a' href='https://filme-secreto.vercel.app/' icon={<FaLanguage />}>
+                Portuguese version
               </MenuItem>
             </MenuList>
           </Menu>
