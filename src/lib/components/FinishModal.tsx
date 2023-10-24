@@ -97,13 +97,16 @@ function FinishModal(props:ModalProps) {
                 {/*<Divider />*/}
 
                 <Text marginY={3} fontSize="sm">
-                    If you liked this game, please consider donating any value.
+                    If you liked this game, please <b>consider donating any value.</b>
+                </Text>
+                <Text marginY={3} fontSize="sm">
+                    You can share your results on <b>Twitter, Telegram, WhatsApp, Facebook</b> and others below.
                 </Text>
             </ModalBody>
             <ModalFooter>
                 <RWebShare
                     data={{
-                        text: encodeURIComponent(`🎥 GuessTheMovie #${props.gameNumber}\n\n🔵 ${props.blue}\n🟢 ${props.green}\n🟡 ${props.yellow}\n🔴 ${props.red}\n\n🏆 My current Streak: ${getStreak()}\n🎉 I guessed the movie in ${getVictoriesPercentage()}% of my games!\n\n`),
+                        text: encodeURIComponent(`🎥 GuessTheMovie #${props.gameNumber}\n\n🔵 ${props.blue}\n🟢 ${props.green}\n🟡 ${props.yellow}\n🔴 ${props.red}\n\n🏆 My current Streak: ${getStreak()}\n\n`),
                         url: window.location.href,
                         title: "GuessTheMovie",
                     }}
