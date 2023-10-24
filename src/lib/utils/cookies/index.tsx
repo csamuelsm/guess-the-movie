@@ -42,23 +42,23 @@ export function cookieExist(cookieName:string) {
 export function increaseNumberOfGames() {
     if (cookieExist('number_of_games')) {
         let curr = getNumberOfGames();
-        Cookies.set('number_of_games', parseInt(curr) + 1);
+        Cookies.set('number_of_games', parseInt(curr) + 1, { expires: 365 });
     } else {
-        Cookies.set('number_of_games', 1);
+        Cookies.set('number_of_games', 1, { expires: 365 });
     }
 }
 
 export function increaseNumberOfVictories() {
     if (cookieExist('victories')) {
         let curr = getNumberOfVictories();
-        Cookies.set('victories', parseInt(curr) + 1);
+        Cookies.set('victories', parseInt(curr) + 1, { expires: 365 });
     } else {
-        Cookies.set('victories', 1);
+        Cookies.set('victories', 1, { expires: 365 });
     }
 }
 
 export function setLastPlayed(date:Date) {
-    if (date) Cookies.set('last_played', date);
+    if (date) Cookies.set('last_played', date, { expires: 365 });
 }
 
 export function getVictoriesPercentage() {
@@ -91,14 +91,14 @@ export function lastPlayedYesterday() {
 export function increaseStreak() {
     if (cookieExist('streak') && lastPlayedYesterday()) {
         let curr = parseInt(getStreak());
-        Cookies.set('streak', curr + 1);
+        Cookies.set('streak', curr + 1, { expires: 365 });
     } else {
-        Cookies.set('streak', 1);
+        Cookies.set('streak', 1, { expires: 365 });
     }
 }
 
 export function resetStreak() {
-    Cookies.set('streak', 0);
+    Cookies.set('streak', 0, { expires: 365 });
 }
 
 export function alreadyPlayedThisGame(gameNumber:number) {
@@ -117,10 +117,10 @@ export function addGamePlayed(gameNumber:number) {
         if (games_played.includes(gameNumber)) return;
         else {
             games_played.push(gameNumber.toString());
-            Cookies.set('games_played', JSON.stringify(games_played));
+            Cookies.set('games_played', JSON.stringify(games_played), { expires: 365 });
         }
         //console.log(getCookie('games_played'));
     } else {
-        Cookies.set('games_played', JSON.stringify([gameNumber.toString()]));
+        Cookies.set('games_played', JSON.stringify([gameNumber.toString()]), { expires: 365 });
     }
 }
