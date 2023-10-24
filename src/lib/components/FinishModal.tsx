@@ -97,10 +97,10 @@ function FinishModal(props:ModalProps) {
                 {/*<Divider />*/}
 
                 <Text marginY={3} fontSize="sm">
-                    If you liked this game, please <b>consider donating any value.</b>
+                    If you liked this game, please <b>consider donating any value</b> to support this game.
                 </Text>
                 <Text marginY={3} fontSize="sm">
-                    You can share your results on <b>Twitter, Telegram, WhatsApp, Facebook</b> and others below.
+                    You can share your results with your friends on <b>Twitter, Telegram, WhatsApp, Facebook</b> and others below.
                 </Text>
             </ModalBody>
             <ModalFooter>
