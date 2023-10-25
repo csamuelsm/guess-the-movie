@@ -9,11 +9,11 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-const APP_NAME = 'GuessTheMovie | Daily Movie Guessing Game';
+const APP_NAME = 'GuessTheMovie | Guess the secret movie with the help of AI!';
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: '%s | GuessTheMovie' },
-  description: 'The objective of the game Guess The Movie is to discover the secret movie of the day. To do this, you must guess movies that you think are similar to the secret movie. It is similar to games like Wordle and Contexto.',
+  description: 'The objective of the game Guess The Movie is to discover the secret movie of the day with the help of an AI. To do this, you must guess movies that you think are similar to the secret movie. It is similar to games like Wordle and Contexto.',
   viewport: {
     width: 'device-width',
     initialScale: 1,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: 'Guess the Movie',
     locale: 'en',
     title: 'GuessTheMovie',
-    description: 'The objective of the game Guess The Movie is to discover the secret movie of the day. To do this, you must guess movies that you think are similar to the secret movie.  It is similar to games like Wordle and Contexto.',
+    description: 'The objective of the game Guess The Movie is to discover the secret movie of the day with the help of an AI. To do this, you must guess movies that you think are similar to the secret movie. It is similar to games like Wordle and Contexto.',
     images: {
       url: 'gtm-og-image.png',
       alt: 'Guess The Movie og-image',
