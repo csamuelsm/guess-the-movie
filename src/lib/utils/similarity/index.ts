@@ -61,7 +61,9 @@ const forbidden_words:string[] = ['',
 'sluts', 'damn dirty apes', 'pointless', 'stupid people', 'ridiculous monsters',
 'pretentious garbage about good things', 'wtf', 'dumb fun', 'protagonist is an idiot',
 'batshit crazy', 'stupid children ruin everything', 'useless', 'transvestites',
-'underaged sexchild porn', 'evangelical christian trash'];
+'underaged sexchild porn', 'evangelical christian trash',
+'pretentious', 'previsible', 'bad acting', 'overestimated', 'overvalue', 'predictable', 'foreseeable',
+'cocky'];
 
 export async function getMostSimilarTags(target:string, guess:string, tagData:TagsData[]) {
     let target_tags:string[] = [];
