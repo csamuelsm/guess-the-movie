@@ -1,5 +1,5 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { Input, Flex, Text, Popover, PopoverAnchor, PopoverContent, PopoverBody, VStack, Box, StackDivider, Spinner, HStack, Button, Progress, ProgressLabel, Stack, useColorMode } from '@chakra-ui/react';
+import { useToast, Input, Flex, Text, Popover, PopoverAnchor, PopoverContent, PopoverBody, VStack, Box, StackDivider, Spinner, HStack, Button, Progress, ProgressLabel, Stack, useColorMode } from '@chakra-ui/react';
 //import { getVectorsFromData } from '../utils';
 
 import { notFound } from 'next/navigation'
@@ -70,6 +70,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
     similarity:number
   }[]>([]);
   const [mostSimilar, setMostSimilar] = useState<number>(0);
+  const toast = useToast();
   const { colorMode, toggleColorMode } = useColorMode();
 
   function increaseCorrespondingColor(val:number) {
@@ -164,7 +165,13 @@ function AutocompleteInput( props:AutocompleteProps ) {
                 } catch(e) {
                     //TODO: DISPLAY ERROR MESSAGE
                     console.log((e as Error).message);
-                    return notFound();
+                    toast({
+                        title: 'Perdão! Algum erro desconhecido aconteceu.',
+                        description: 'Você pode reportar este erro enviando um feedback pelo menu.',
+                        status: 'error',
+                        isClosable: true,
+                        duration: 4000
+                    })
                 }
             }
             setIsLoading(false);
@@ -268,7 +275,13 @@ function AutocompleteInput( props:AutocompleteProps ) {
         } else {
             //TODO: else SHOW ERROR MESSAGE
             //throw Error('Something went wrong and we don\'t know what :(');
-            return notFound();
+            toast({
+                title: 'Movie already guessed!',
+                description: 'You already guessed this movie or some error happened.',
+                status: 'error',
+                isClosable: true,
+                duration: 4000
+            })
         }
     }
   }, [guess]);
