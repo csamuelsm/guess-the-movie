@@ -82,6 +82,8 @@ function AutocompleteInput( props:AutocompleteProps ) {
   }
 
   function winGame() {
+    if (!props.oldGame)
+        increaseStreak();
     const jsConfetti = new JSConfetti();
     jsConfetti.addConfetti({
         confettiNumber: 100,
@@ -90,8 +92,6 @@ function AutocompleteInput( props:AutocompleteProps ) {
     if (!lastPlayedToday()) {
         let today = new Date();
         setLastPlayed(today);
-        if (!props.oldGame)
-            increaseStreak();
     }
     if (!alreadyPlayedThisGame(props.gameNumber)) {
         increaseNumberOfGames();
