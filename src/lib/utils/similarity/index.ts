@@ -64,7 +64,7 @@ const forbidden_words:string[] = ['',
 'underaged sexchild porn', 'evangelical christian trash',
 'pretentious', 'previsible', 'bad acting', 'overestimated', 'overvalue', 'predictable', 'foreseeable',
 'cocky', 'poor plot', 'overrated', 'bad writing', 'poor dialogue', 'racial victimism',
-'good acting', 'great acting', 'atmospheric', 'acting', 'dvix', 'ending', 'have',
+'good acting', 'great acting', 'atmospheric', 'acting', 'dvix', 'divx', 'ending', 'have',
 'having', 'want', 'wish', 'wating'];
 
 export async function getMostSimilarTags(target:string, guess:string, tagData:TagsData[]) {
