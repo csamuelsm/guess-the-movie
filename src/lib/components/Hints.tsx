@@ -1,4 +1,4 @@
-import { Badge, Button, Flex, HStack, Text } from '@chakra-ui/react'
+import { Badge, Button, Flex, HStack, Text, Wrap, WrapItem } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 
 type HintsProps = {
@@ -36,23 +36,27 @@ function Hints(props:HintsProps) {
   }, []);
 
   return (
-    <Flex flexDirection='row' gap={3} marginY={2}>
-        <Button colorScheme='purple' size='xs' isDisabled={!(hintNumber < 3) || loading} onClick={() => {
-            let currHintNumber = hintNumber;
-            setHintNumber(hintNumber+1);
-        }}>
-            Get Hint ({hintNumber}/3)
-        </Button>
+    <Wrap gap={3} marginY={2} align='center'>
+        <WrapItem>
+            <Button colorScheme='purple' size='xs' isDisabled={!(hintNumber < 3) || loading} onClick={() => {
+                let currHintNumber = hintNumber;
+                setHintNumber(hintNumber+1);
+            }}>
+                Get Hint ({hintNumber}/3)
+            </Button>
+        </WrapItem>
         {
             hints.map((el, idx) => {
                 return (
-                    <Badge fontSize='xs' fontWeight='bold' colorScheme='purple' display={
-                        hintNumber > idx ? 'block' : 'none'
-                    }>{idx + 1}. {el}</Badge>
+                    <WrapItem>
+                        <Badge fontSize='xs' fontWeight='bold' colorScheme='purple' display={
+                            hintNumber > idx ? 'block' : 'none'
+                        }>{idx + 1}. {el}</Badge>
+                    </WrapItem>
                 )
             })
         }
-    </Flex>
+    </Wrap>
   )
 }
 
