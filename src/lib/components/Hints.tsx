@@ -1,4 +1,4 @@
-import { Badge, Button, HStack, Text } from '@chakra-ui/react'
+import { Badge, Button, Flex, HStack, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 
 type HintsProps = {
@@ -36,7 +36,7 @@ function Hints(props:HintsProps) {
   }, []);
 
   return (
-    <HStack gap={3} marginY={2}>
+    <Flex flexDirection='row' gap={3} marginY={2}>
         <Button colorScheme='purple' size='xs' isDisabled={!(hintNumber < 3) || loading} onClick={() => {
             let currHintNumber = hintNumber;
             setHintNumber(hintNumber+1);
@@ -52,7 +52,7 @@ function Hints(props:HintsProps) {
                 )
             })
         }
-    </HStack>
+    </Flex>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, IconButton, Menu, MenuButton, MenuList, MenuItem, Link } from '@chakra-ui/react';
+import { Box, Flex, Heading, IconButton, Menu, MenuButton, MenuList, MenuItem, Link, Tooltip } from '@chakra-ui/react';
 import { FaLanguage, FaHandHoldingHeart, FaBars, FaRegCommentAlt, FaRegFlag, FaRegLightbulb, FaRegCalendarAlt } from 'react-icons/fa';
 import { MdMovieFilter } from 'react-icons/md';
 
@@ -32,14 +32,16 @@ const Header = (props:HeaderProps) => {
       </Box>
       <Flex flexDirection="row" alignItems="flex-end" justifyContent="flex-end" w="100%">
         <Box marginX={1.5}>
-          <IconButton
-            aria-label="give up"
-            icon={<FaRegFlag />}
-            isDisabled={props.canGiveUp}
-            onClick={() => {
-              setGiveUp(true);
-            }}
-          />
+          <Tooltip hasArrow label='Give up'>
+            <IconButton
+              aria-label="give up"
+              icon={<FaRegFlag />}
+              isDisabled={props.canGiveUp}
+              onClick={() => {
+                setGiveUp(true);
+              }}
+            />
+          </Tooltip>
         </Box>
         <Box marginX={1.5}>
           {/*<IconButton
@@ -49,33 +51,37 @@ const Header = (props:HeaderProps) => {
               props.setDonation(true);
             }}
           />*/}
-          <Menu>
-            <MenuButton as={IconButton} icon={<FaBars />} />
-            <MenuList>
-              <MenuItem icon={<FaRegCalendarAlt/>} onClick={() => {
-                props.setOldGames(true);
-              }}>
-                Old games
-              </MenuItem>
-              <MenuItem icon={<FaHandHoldingHeart/>} onClick={() => {
-                props.setDonation(true);
-              }}>Donate</MenuItem>
-              <MenuItem as='a' href='https://forms.gle/32FbMft1d9hiVep49' icon={<FaRegCommentAlt/>}>
-                Feedback
-              </MenuItem>
-              <MenuItem icon={<FaRegLightbulb/>} onClick={() => {
-                props.setCredits(true);
-              }}>
-                Credits
-              </MenuItem>
-              <MenuItem as='a' href='https://filme-secreto.vercel.app/' icon={<FaLanguage />}>
-                Portuguese version
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <Tooltip hasArrow label='Menu'>
+            <Menu>
+              <MenuButton as={IconButton} icon={<FaBars />} />
+              <MenuList>
+                <MenuItem icon={<FaRegCalendarAlt/>} onClick={() => {
+                  props.setOldGames(true);
+                }}>
+                  Old games
+                </MenuItem>
+                <MenuItem icon={<FaHandHoldingHeart/>} onClick={() => {
+                  props.setDonation(true);
+                }}>Donate</MenuItem>
+                <MenuItem as='a' href='https://forms.gle/32FbMft1d9hiVep49' icon={<FaRegCommentAlt/>}>
+                  Feedback
+                </MenuItem>
+                <MenuItem icon={<FaRegLightbulb/>} onClick={() => {
+                  props.setCredits(true);
+                }}>
+                  Credits
+                </MenuItem>
+                <MenuItem as='a' href='https://filme-secreto.vercel.app/' icon={<FaLanguage />}>
+                  Portuguese version
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Tooltip>
         </Box>
         <Box marginX={1.5}>
-          <ThemeToggle />
+          <Tooltip hasArrow label='Toggle theme'>
+            <ThemeToggle />
+          </Tooltip>
         </Box>
       </Flex>
     </Flex>
