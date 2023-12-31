@@ -11,6 +11,7 @@ import binarySearch from '../utils/binarySearch';
 import { getVectorsFromData } from '../utils';
 import Instructions from './Instructions';
 import SimilarTags from './SimilarTags';
+import Hints from './Hints';
 import JSConfetti from 'js-confetti'
 
 import { increaseNumberOfGames, increaseNumberOfVictories, setLastPlayed, lastPlayedToday, increaseStreak, alreadyPlayedThisGame, addGamePlayed } from '../utils/cookies';
@@ -291,7 +292,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
         flexDirection="column"
         w="100%"
         justifyContent={status === null ? "flex-start" : "center"}
-        minHeight="70vh"
+        minHeight="50vh"
         >
         {status != null &&
             <VStack alignItems="center" justifyContent="center" textAlign="center">
@@ -341,6 +342,7 @@ function AutocompleteInput( props:AutocompleteProps ) {
                     </PopoverBody>
                 </PopoverContent>
             </Popover>
+            <Hints target={props.word} />
         </>
         }
         {similarities.length == 0 &&
@@ -354,8 +356,8 @@ function AutocompleteInput( props:AutocompleteProps ) {
                         colorScheme={getColorScheme(transformValue(el.similarity, mostSimilar))}
                         height={transformValue(el.similarity, mostSimilar) >= 99.999 ? 37 : 30}
                         borderRadius={5}
-                        border={el.word === guess ? "2px solid" : "none"}
-                        borderColor={el.word === guess ? "blue.500" : "none"}
+                        border={el.word.trim() === guess?.trim() ? "2px solid" : "none"}
+                        borderColor={el.word.trim() === guess?.trim() ? "blue.500" : "none"}
                         marginBottom={0}
                         >
                         <ProgressLabel color={colorMode == 'dark' ? "gray.900" : "white"}
