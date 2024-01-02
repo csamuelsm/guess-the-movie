@@ -20,7 +20,7 @@ function DonationRequest(props:FooterProps) {
 
             <GridItem colSpan={2} color='white' w='100%' textAlign={['center', null, null, 'left']}>
                 <Text fontSize='xs'>
-                Guess the Movie is a <u><b>free, ad-free game, and I intend to keep it that way</b></u>. However, keeping it running requires time and money. In more than a month of playing, I only received two donations of $1.00. Therefore, if you like the game, I would like to <u><b>ask for your help in donating any amount</b></u> to contribute to the maintenance of Guess the Movie.
+                Guess the Movie is a <u><b>free, ad-free game, and I intend to keep it that way</b></u>. However, keeping it running requires time and money. Therefore, if you like the game, I would like to <u><b>ask for your help in donating any amount</b></u> to contribute to the maintenance of Guess the Movie.
                 </Text>
             </GridItem>
 
