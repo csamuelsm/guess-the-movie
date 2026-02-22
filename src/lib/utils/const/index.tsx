@@ -1,1 +1,1 @@
-export var startDate = new Date(2023, 9, 11);
+export var startDate = new Date(2026, 1, 1);
